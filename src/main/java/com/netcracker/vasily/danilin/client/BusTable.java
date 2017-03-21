@@ -33,6 +33,7 @@ public class BusTable implements EntryPoint {
      */
     public void onModuleLoad() {
         final HorizontalPanel topPanel = new HorizontalPanel();
+        RootPanel.get("topContainer").add(topPanel);
 
         final VerticalPanel buttonPanel = new VerticalPanel();
         buttonPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
@@ -42,6 +43,14 @@ public class BusTable implements EntryPoint {
         buttonPanel.add(adminButton);
         //TODO: Add Sort and Filter Components
 
-        
+        //TODO: Create Admin Component
+
+        final FlexTable table = new FlexTable();
+        RootPanel.get("tableContainer").add(table);
+
+        final VerticalPanel bottomPanel = new VerticalPanel();
+        RootPanel.get("bottomContainer").add(bottomPanel);
+
+
     }
 }
