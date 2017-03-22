@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <table>
-
+    <route number="1" start="Oxford St." destination="Paddington Railway" time="10:30"/>
+    <route number="2" start="Oxford St." destination="Paddington Railway" time="10:50"/>
+    <route number="3" start="Oxford St." destination="Paddington Railway" time="15:10"/>
+    <route number="4" start="Oxford St." destination="Paddington Railway" time="20:00"/>
 </table>

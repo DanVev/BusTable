@@ -1,6 +1,8 @@
 package com.netcracker.vasily.danilin.client;
 
 import com.google.gwt.user.client.ui.*;
+import com.netcracker.vasily.danilin.server.GreetingServiceImpl;
+import com.netcracker.vasily.danilin.server.XMLParser;
 import com.netcracker.vasily.danilin.shared.FieldVerifier;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -10,6 +12,8 @@ import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+
+import java.util.List;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -41,7 +45,12 @@ public class BusTable implements EntryPoint {
 
         final Button adminButton = new Button("Admin Mode");
         buttonPanel.add(adminButton);
+
         //TODO: Add Sort and Filter Components
+        final Button sortButton = new Button("Sorting");
+        final Button filterButton = new Button("Filter");
+        buttonPanel.add(sortButton);
+        buttonPanel.add(filterButton);
 
         //TODO: Create Admin Component
 
@@ -51,6 +60,20 @@ public class BusTable implements EntryPoint {
         final VerticalPanel bottomPanel = new VerticalPanel();
         RootPanel.get("bottomContainer").add(bottomPanel);
 
+        tableDataRequest();
+    }
 
+    private void tableDataRequest() {
+        greetingService.greetServer("", new AsyncCallback<List<List<String>>>() {
+            @Override
+            public void onFailure(Throwable throwable) {
+
+            }
+
+            @Override
+            public void onSuccess(List<List<String>> lists) {
+
+            }
+        });
     }
 }
