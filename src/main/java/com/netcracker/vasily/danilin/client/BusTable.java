@@ -31,6 +31,7 @@ public class BusTable implements EntryPoint {
      * Create a remote service proxy to talk to the server-side Greeting service.
      */
     private final GreetingServiceAsync greetingService = GWT.create(GreetingService.class);
+    private FlexTable table;
 
     /**
      * This is the entry point method.
@@ -54,13 +55,20 @@ public class BusTable implements EntryPoint {
 
         //TODO: Create Admin Component
 
-        final FlexTable table = new FlexTable();
+        table = new FlexTable();
         RootPanel.get("tableContainer").add(table);
+        setColumnNames();
 
         final VerticalPanel bottomPanel = new VerticalPanel();
         RootPanel.get("bottomContainer").add(bottomPanel);
 
         tableDataRequest();
+    }
+
+    private void setColumnNames() {
+        String[] tableColumnNames = new String[]{"Route №", "Start point", "Destination Point", "Arrival Time"};
+        for (int i = 0; i < tableColumnNames.length; i++)
+            table.setText(0, i, tableColumnNames[i]);
     }
 
     private void tableDataRequest() {
@@ -72,6 +80,13 @@ public class BusTable implements EntryPoint {
 
             @Override
             public void onSuccess(List<List<String>> lists) {
+                table.clear();
+                setColumnNames();
+                for (int j = 0; j < lists.size(); j++) {
+                    for (int i = 0; i < lists.get(j).size(); i++) {
+                        table.setText(j + 1, i, lists.get(j).get(i));
+                    }
+                }
 
             }
         });
