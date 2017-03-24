@@ -1,6 +1,7 @@
 package com.netcracker.vasily.danilin.client;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.netcracker.vasily.danilin.shared.TableRow;
 
 import java.util.List;
 
@@ -10,5 +11,5 @@ import java.util.List;
 public interface GreetingServiceAsync {
 
 
-    void greetServer(String name, AsyncCallback<List<List<String>>> async);
+    void greetServer(String name, AsyncCallback<List<TableRow>> async);
 }

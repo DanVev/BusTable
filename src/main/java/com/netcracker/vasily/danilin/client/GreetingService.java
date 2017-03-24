@@ -2,6 +2,7 @@ package com.netcracker.vasily.danilin.client;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
+import com.netcracker.vasily.danilin.shared.TableRow;
 
 import java.util.List;
 
@@ -10,5 +11,5 @@ import java.util.List;
  */
 @RemoteServiceRelativePath("greet")
 public interface GreetingService extends RemoteService {
-    List<List<String>> greetServer(String name) throws IllegalArgumentException;
+    List<TableRow> greetServer(String name) throws IllegalArgumentException;
 }

@@ -3,6 +3,7 @@ package com.netcracker.vasily.danilin.server;
 import com.netcracker.vasily.danilin.client.GreetingService;
 import com.netcracker.vasily.danilin.shared.FieldVerifier;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import com.netcracker.vasily.danilin.shared.TableRow;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ import java.util.List;
 public class GreetingServiceImpl extends RemoteServiceServlet implements
     GreetingService {
 
-  public List<List<String>> greetServer(String input) throws IllegalArgumentException {
+  public List<TableRow> greetServer(String input) throws IllegalArgumentException {
 
 
     return XMLParser.getData();

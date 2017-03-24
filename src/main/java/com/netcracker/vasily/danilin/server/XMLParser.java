@@ -1,6 +1,7 @@
 package com.netcracker.vasily.danilin.server;
 
 import com.google.gwt.user.client.Window;
+import com.netcracker.vasily.danilin.shared.TableRow;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -22,8 +23,8 @@ public class XMLParser {
     public XMLParser() {
     }
 
-    public static List<List<String>> getData() {
-        List<List<String>> result = new ArrayList<>();
+    public static List<TableRow> getData() {
+        List<TableRow> result = new ArrayList<>();
         try {
             DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
             String path = XMLParser.class.getResource("timetable.xml").getFile();
@@ -35,13 +36,13 @@ public class XMLParser {
             if (node == null) return result;
             do {
                 if (node.getNodeName().equals("route")) {
-                    List<String> resultItem = new ArrayList<>();
+                    TableRow resultItem = new TableRow();
 
                     NamedNodeMap map = node.getAttributes();
-                    resultItem.add((map.getNamedItem("number")).getNodeValue());
-                    resultItem.add((map.getNamedItem("start")).getNodeValue());
-                    resultItem.add((map.getNamedItem("destination")).getNodeValue());
-                    resultItem.add((map.getNamedItem("time")).getNodeValue());
+                    resultItem.setRoute((map.getNamedItem("number")).getNodeValue());
+                    resultItem.setStart((map.getNamedItem("start")).getNodeValue());
+                    resultItem.setDestination((map.getNamedItem("destination")).getNodeValue());
+                    resultItem.setTime((map.getNamedItem("time")).getNodeValue());
                     result.add(resultItem);
                     System.out.println(resultItem.toString());
                 }
