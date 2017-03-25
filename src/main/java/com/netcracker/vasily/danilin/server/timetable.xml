@@ -4,4 +4,13 @@
     <route number="2" start="Oxford St." destination="Paddington Railway" time="10:50"/>
     <route number="3" start="Oxford St." destination="Paddington Railway" time="15:10"/>
     <route number="4" start="Oxford St." destination="Paddington Railway" time="20:00"/>
+    <route number="5" start="Oxford St." destination="Paddington Railway" time="08:00"/>
+    <route number="6" start="Oxford St." destination="Paddington Railway" time="20:00"/>
+    <route number="7" start="Abbington Road" destination="Paddington Railway" time="20:00"/>
+    <route number="8" start="Oxford St." destination="Paddington Railway" time="20:00"/>
+    <route number="9" start="Oxford St." destination="Kings Cross Railway" time="11:00"/>
+    <route number="10" start="Oxford St." destination="Paddington Railway" time="12:00"/>
+    <route number="11" start="Oxford St." destination="Paddington Railway" time="13:00"/>
+    <route number="12" start="Oxford St." destination="Paddington Railway" time="14:00"/>
+    <route number="13" start="Oxford St." destination="Paddington Railway" time="20:00"/>
 </table>

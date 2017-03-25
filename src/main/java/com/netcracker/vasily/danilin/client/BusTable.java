@@ -1,10 +1,7 @@
 package com.netcracker.vasily.danilin.client;
 
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.cellview.client.CellTable;
-import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy;
-import com.google.gwt.user.cellview.client.SimplePager;
-import com.google.gwt.user.cellview.client.TextColumn;
+import com.google.gwt.user.cellview.client.*;
 import com.google.gwt.user.client.ui.*;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -13,6 +10,7 @@ import com.google.gwt.view.client.HasData;
 import com.google.gwt.view.client.ListDataProvider;
 import com.netcracker.vasily.danilin.shared.TableRow;
 
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -54,10 +52,14 @@ public class BusTable implements EntryPoint {
         table = new CellTable<TableRow>();
         table.setWidth("100%", true);
         table.setKeyboardSelectionPolicy(HasKeyboardSelectionPolicy.KeyboardSelectionPolicy.ENABLED);
-        RootPanel.get("tableContainer").add(table);
-        initColumns();
+        //RootPanel.get("tableContainer").add(table);
+        ColumnSortEvent.ListHandler<TableRow> sortHandler = new ColumnSortEvent.ListHandler<TableRow>(
+                dataProvider.getList());
+        table.addColumnSortHandler(sortHandler);
+        initColumns(sortHandler);
         dataProvider.addDataDisplay(table);
         tableDataRequest();
+        table.setRowCount(dataProvider.getList().size());
 
         table.setAutoHeaderRefreshDisabled(true);
         table.setAutoFooterRefreshDisabled(true);
@@ -68,22 +70,31 @@ public class BusTable implements EntryPoint {
         pager.setPageSize(10);
 
         final VerticalPanel bottomPanel = new VerticalPanel();
-        RootPanel.get("bottomContainer").add(bottomPanel);
+        bottomPanel.add(table);
+        bottomPanel.add(pager);
+        bottomPanel.setCellHorizontalAlignment(pager, HasHorizontalAlignment.ALIGN_CENTER);
+        bottomPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+        RootPanel.get("tableContainer").add(bottomPanel);
 
-        //tableDataRequest();
     }
 
-    private void initColumns() {
+    private void initColumns(ColumnSortEvent.ListHandler<TableRow> sortHandler) {
         //String[] tableColumnNames = new String[]{"Route №", "Start point", "Destination Point", "Arrival Time"};
         TextColumn<TableRow> routeColumn =
                 new TextColumn<TableRow>() {
                     @Override
                     public String getValue(TableRow object) {
-                        return object.getRoute();
+                        return (new Integer(object.getRoute())).toString();
                     }
                 };
         routeColumn.setSortable(true);
         table.addColumn(routeColumn, "Route №");
+        sortHandler.setComparator(routeColumn, new Comparator<TableRow>() {
+            @Override
+            public int compare(TableRow o1, TableRow o2) {
+                return (new Integer(o1.getRoute())).compareTo(o2.getRoute());
+            }
+        });
 
         TextColumn<TableRow> startColumn =
                 new TextColumn<TableRow>() {
@@ -94,6 +105,12 @@ public class BusTable implements EntryPoint {
                 };
         startColumn.setSortable(true);
         table.addColumn(startColumn, "Start Point");
+        sortHandler.setComparator(startColumn, new Comparator<TableRow>() {
+            @Override
+            public int compare(TableRow o1, TableRow o2) {
+                return o1.getStart().compareTo(o2.getStart());
+            }
+        });
 
         TextColumn<TableRow> destinationColumn =
                 new TextColumn<TableRow>() {
@@ -104,6 +121,12 @@ public class BusTable implements EntryPoint {
                 };
         destinationColumn.setSortable(true);
         table.addColumn(destinationColumn, "Destination Point");
+        sortHandler.setComparator(destinationColumn, new Comparator<TableRow>() {
+            @Override
+            public int compare(TableRow o1, TableRow o2) {
+                return o1.getDestination().compareTo(o2.getDestination());
+            }
+        });
 
         TextColumn<TableRow> timeColumn =
                 new TextColumn<TableRow>() {
@@ -114,6 +137,12 @@ public class BusTable implements EntryPoint {
                 };
         timeColumn.setSortable(true);
         table.addColumn(timeColumn, "Time");
+        sortHandler.setComparator(timeColumn, new Comparator<TableRow>() {
+            @Override
+            public int compare(TableRow o1, TableRow o2) {
+                return o1.getTime().compareTo(o2.getTime());
+            }
+        });
 
     }
 
@@ -126,19 +155,11 @@ public class BusTable implements EntryPoint {
 
             @Override
             public void onSuccess(List<TableRow> lists) {
-                //table.clear();
-                //initColumns();
-                //dataProvider = new ListDataProvider<TableRow>();
                 dataProvider.getList().addAll(lists);
                 dataProvider.flush();
                 dataProvider.refresh();
                 table.redraw();
-//                for (int j = 0; j < lists.size(); j++) {
-//                    for (int i = 0; i < lists.get(j).size(); i++) {
-//                        table.setText(table.getRowCount(), i, lists.get(j).get(i));
-//                    }
-//                }
-//
+
 
             }
         });

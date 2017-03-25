@@ -2,24 +2,26 @@ package com.netcracker.vasily.danilin.shared;
 
 import com.google.gwt.view.client.ProvidesKey;
 
+import java.io.Serializable;
+
 /**
  * Created by Vasily Danilin on 24.03.2017.
  */
-public class TableRow {
-    public static final ProvidesKey<TableRow> KEY_PROVIDER = new ProvidesKey<TableRow>() {
-        @Override
-        public Object getKey(TableRow item) {
-            return item == null ? null : item.getId();
-        }
-    };
+public class TableRow implements Serializable, Comparable<TableRow> {
+    //    public static final ProvidesKey<TableRow> KEY_PROVIDER = new ProvidesKey<TableRow>() {
+//        @Override
+//        public Object getKey(TableRow item) {
+//            return item == null ? null : item.getId();
+//        }
+//    };
     private static int nextId = 0;
     private int id;
-    private String route;
+    private int route;
     private String start;
     private String destination;
     private String time;
 
-    public TableRow(String route, String start, String destination, String time) {
+    public TableRow(int route, String start, String destination, String time) {
         this.route = route;
         this.start = start;
         this.destination = destination;
@@ -41,11 +43,11 @@ public class TableRow {
         this.id = id;
     }
 
-    public String getRoute() {
+    public int getRoute() {
         return route;
     }
 
-    public void setRoute(String route) {
+    public void setRoute(int route) {
         this.route = route;
     }
 
@@ -81,5 +83,10 @@ public class TableRow {
                 ", destination='" + destination + '\'' +
                 ", time='" + time + '\'' +
                 '}';
+    }
+
+    @Override
+    public int compareTo(TableRow o) {
+        return (o == null) ? -1 : (new Integer(-o.route)).compareTo(route);
     }
 }
