@@ -1,5 +1,7 @@
 package com.netcracker.vasily.danilin.client;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.*;
 import com.google.gwt.user.client.ui.*;
@@ -42,11 +44,19 @@ public class BusTable implements EntryPoint {
         final Button adminButton = new Button("Admin Mode");
         buttonPanel.add(adminButton);
 
-        //TODO: Add Sort and Filter Components
-        final Button sortButton = new Button("Sorting");
+        //TODO: AddFilter Components
+        final Button refreshButton = new Button("Refresh");
         final Button filterButton = new Button("Filter");
-        buttonPanel.add(sortButton);
+        filterButton.addClickHandler(getFilterHandler());
+        refreshButton.addClickHandler(new ClickHandler() {
+            @Override
+            public void onClick(ClickEvent clickEvent) {
+                tableDataRequest();
+            }
+        });
+        buttonPanel.add(refreshButton);
         buttonPanel.add(filterButton);
+
 
         //TODO: Create Admin Component
         table = new CellTable<TableRow>();
@@ -76,6 +86,15 @@ public class BusTable implements EntryPoint {
         bottomPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
         RootPanel.get("tableContainer").add(bottomPanel);
 
+    }
+
+    private ClickHandler getFilterHandler() {
+        return new ClickHandler() {
+            @Override
+            public void onClick(ClickEvent clickEvent) {
+
+            }
+        };
     }
 
     private void initColumns(ColumnSortEvent.ListHandler<TableRow> sortHandler) {
@@ -155,6 +174,7 @@ public class BusTable implements EntryPoint {
 
             @Override
             public void onSuccess(List<TableRow> lists) {
+                dataProvider.getList().clear();
                 dataProvider.getList().addAll(lists);
                 dataProvider.flush();
                 dataProvider.refresh();
