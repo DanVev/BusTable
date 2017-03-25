@@ -27,7 +27,7 @@ public class BusTable implements EntryPoint {
     @UiField(provided = true)
     private CellTable<TableRow> table;
     @UiField(provided = true)
-    SimplePager pager;
+    private SimplePager pager;
     private ListDataProvider<TableRow> dataProvider = new ListDataProvider<TableRow>();
 
     /**
@@ -51,13 +51,13 @@ public class BusTable implements EntryPoint {
         buttonPanel.add(filterButton);
 
         //TODO: Create Admin Component
-        table = new CellTable<TableRow>(TableRow.KEY_PROVIDER);
+        table = new CellTable<TableRow>();
         table.setWidth("100%", true);
         table.setKeyboardSelectionPolicy(HasKeyboardSelectionPolicy.KeyboardSelectionPolicy.ENABLED);
         RootPanel.get("tableContainer").add(table);
         initColumns();
+        dataProvider.addDataDisplay(table);
         tableDataRequest();
-        this.addDataDisplay(table);
 
         table.setAutoHeaderRefreshDisabled(true);
         table.setAutoFooterRefreshDisabled(true);
@@ -65,6 +65,7 @@ public class BusTable implements EntryPoint {
         SimplePager.Resources pagerResources = GWT.create(SimplePager.Resources.class);
         pager = new SimplePager(SimplePager.TextLocation.CENTER, pagerResources, false, 0, true);
         pager.setDisplay(table);
+        pager.setPageSize(10);
 
         final VerticalPanel bottomPanel = new VerticalPanel();
         RootPanel.get("bottomContainer").add(bottomPanel);
@@ -128,11 +129,10 @@ public class BusTable implements EntryPoint {
                 //table.clear();
                 //initColumns();
                 //dataProvider = new ListDataProvider<TableRow>();
-                List<TableRow> rowsList = dataProvider.getList();
-                for (TableRow row : lists) {
-                    rowsList.add(row);
-                }
-
+                dataProvider.getList().addAll(lists);
+                dataProvider.flush();
+                dataProvider.refresh();
+                table.redraw();
 //                for (int j = 0; j < lists.size(); j++) {
 //                    for (int i = 0; i < lists.get(j).size(); i++) {
 //                        table.setText(table.getRowCount(), i, lists.get(j).get(i));
@@ -142,9 +142,5 @@ public class BusTable implements EntryPoint {
 
             }
         });
-    }
-
-    public void addDataDisplay(HasData<TableRow> display) {
-        dataProvider.addDataDisplay(display);
     }
 }

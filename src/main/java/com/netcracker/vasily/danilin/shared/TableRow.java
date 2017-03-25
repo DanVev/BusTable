@@ -13,20 +13,24 @@ public class TableRow {
         }
     };
     private static int nextId = 0;
-    int id;
-    String route;
-    String start;
-    String destination;
-    String time;
+    private int id;
+    private String route;
+    private String start;
+    private String destination;
+    private String time;
 
     public TableRow(String route, String start, String destination, String time) {
         this.route = route;
         this.start = start;
         this.destination = destination;
         this.time = time;
+        id = nextId;
+        nextId++;
     }
 
     public TableRow() {
+        id = nextId;
+        nextId++;
     }
 
     public int getId() {
